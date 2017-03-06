@@ -5,6 +5,10 @@ $(function() {
   InitializeBoard();
   gatesArray = [];
 
+  $('#reset').click(function() {
+    window.location.reload();
+  })
+
   $('#createGates').click(function() {
     createGates();
     loadGates();
@@ -17,6 +21,7 @@ $(function() {
           droppable.droppable("option", "disabled", true);
           updateCoordinates($(this));
           updateRelationships($(this));
+          displayGateDebugInfo();
           return true;
         }
       },
@@ -26,8 +31,8 @@ $(function() {
         var droppable = $("#" + $(this).attr('value'));
         droppable.removeClass("disabled");
         droppable.droppable( "option", "disabled", false );
-        updateCoordinates($(this));
-        updateRelationships($(this));
+        severConnections($(this));
+        displayGateDebugInfo();
       }
     });
     $(".grid").droppable( {
@@ -90,6 +95,7 @@ function addGate(gateObject) {
 }
 
 function createGates() {
+  gatesArray = [];
   addGate(new Gate("Wire", "wire1"));
   addGate(new Gate("Wire", "wire2"));
   addGate(new Gate("Wire", "wire3"));
@@ -152,6 +158,22 @@ function updateRelationships(htmlElem) {
   }
 }
 
+function severConnections(htmlElem) {
+  var currentGate = gatesArray[findArrayId(htmlElem.attr('id'))];
+  if (currentGate.output) {
+    currentGate.output.InputLocation1 = null;
+    currentGate.output = null;
+  }
+  if (currentGate.InputLocation1) {
+    currentGate.InputLocation1.output = null;
+    currentGate.InputLocation1 = null;
+  }
+  if (currentGate.InputLocation2) {
+    currentGate.InputLocation2.output = null;
+    currentGate.InputLocation2 = null;
+  }
+}
+
 function findArrayId(domId) {
   return gatesArray.findIndex((e => e.id === domId));
 }
@@ -166,18 +188,16 @@ function updateCoordinates(htmlElem) {
 
 function displayGateDebugInfo() {
   var toDisplay = "";
-  $('#gate-container').children().each(function(index) {
-    var gate = $(this);
+  for (var i = 0; i < gatesArray.length; i++) {
     toDisplay +=
       "<div class='panel-container'>" +
-        "Name: " + gate.attr('id') + "<br>" +
-        "Top: " + gate.prop("style")['top'] + "<br>" +
-        "Left: " + gate.prop("style")['left'] + "<br>" +
-        "Coords: " + gatesArray[index].coordinates + "<br>" +
-        "Input1 From: " + ((gatesArray[index].InputLocation1) ? gatesArray[index].InputLocation1.id : "null") + "<br>" +
-        "Input2 From: " + gatesArray[index].InputLocation2 + "<br>" +
-        "Output To: " + ((gatesArray[index].output) ? gatesArray[index].output.id : "null") + "<br>" +
+        "Name: <strong>" + gatesArray[i].id + "</strong><br>" +
+        "Coords: " + gatesArray[i].coordinates + "<br>" +
+        "Input1 From: " + ((gatesArray[i].InputLocation1) ? "<strong style='color: red'>" + gatesArray[i].InputLocation1.id + "</strong>" : "null") + "<br>" +
+        "Input2 From: " + gatesArray[i].InputLocation2 + "<br>" +
+        "Output To: " + ((gatesArray[i].output) ? "<strong style='color: red'>" + gatesArray[i].output.id + "</strong>" : "null") + "<br>" +
+        "State: " + ((gatesArray[i].state) ? "On" : "Off") + "<br>" +
       "</div>";
-  })
+  }
   $('#debug-panel').html(toDisplay);
 }
