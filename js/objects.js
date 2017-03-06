@@ -1,10 +1,3 @@
-// var Gate = {
-//   type: "", // AND, OR, NOT, etc
-//   coordinates: "", //X-Y Coords
-//   InputLocation1: null, //Input object ref
-//   InputLocation2: null //Input object ref
-// }
-
 function Gate(type, id) {
   this.id = id;
   this.type = type;

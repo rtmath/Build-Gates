@@ -142,7 +142,10 @@ function updateRelationships(htmlElem) {
           break;
 
         case toRight:
-          //Do we want this functionality?
+          var oIndex = findArrayId(htmlElem.attr('id'));
+          var aIndex = findArrayId($(this).attr('id'));
+          gatesArray[aIndex].InputLocation1 = gatesArray[oIndex];
+          gatesArray[oIndex].output = gatesArray[aIndex];
           break;
       }
     })
@@ -171,9 +174,9 @@ function displayGateDebugInfo() {
         "Top: " + gate.prop("style")['top'] + "<br>" +
         "Left: " + gate.prop("style")['left'] + "<br>" +
         "Coords: " + gatesArray[index].coordinates + "<br>" +
-        "Input1: " + ((gatesArray[index].InputLocation1) ? gatesArray[index].InputLocation1.id : "null") + "<br>" +
-        "Input2: " + gatesArray[index].InputLocation2 + "<br>" +
-        "Output: " + ((gatesArray[index].output) ? gatesArray[index].output.id : "null") + "<br>" +
+        "Input1 From: " + ((gatesArray[index].InputLocation1) ? gatesArray[index].InputLocation1.id : "null") + "<br>" +
+        "Input2 From: " + gatesArray[index].InputLocation2 + "<br>" +
+        "Output To: " + ((gatesArray[index].output) ? gatesArray[index].output.id : "null") + "<br>" +
       "</div>";
   })
   $('#debug-panel').html(toDisplay);
