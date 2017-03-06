@@ -10,39 +10,12 @@ $(function() {
   })
 
   $('#createGates').click(function() {
-    createGates();
+    var level = new Level();
+    createGates(level);
     loadGates();
-    $(".gate").draggable( {
-      containment: $("#square-container"),
-      revert: function(droppedObj) {
-        if (!droppedObj) {
-          droppable = $("#" + $(this).attr('value'));
-          droppable.addClass("disabled");
-          droppable.droppable("option", "disabled", true);
-          updateCoordinates($(this));
-          updateRelationships($(this));
-          displayGateDebugInfo();
-          return true;
-        }
-      },
-      revertDuration: 200,
-      start: function() {
-        //If gate starts being moved from where it was dropped, remove that square's disabled class and 'disabled' attribute
-        var droppable = $("#" + $(this).attr('value'));
-        droppable.removeClass("disabled");
-        droppable.droppable( "option", "disabled", false );
-        severConnections($(this));
-        displayGateDebugInfo();
-      }
-    });
-    $(".grid").droppable( {
-      accept: '.ui-draggable',
-      drop: dropGatePiece
-    });
-    $("#gate-container").droppable( {
-      accept: '.ui-draggable',
-      drop: dropGatePiece
-    });
+    $(".gate").draggable( gateDraggableSettings );
+    $(".grid").droppable( gridDroppableSettings );
+    $("#gate-container").droppable( gridDroppableSettings );
 
     console.log("Gates Array: ");
     console.log(gatesArray);
@@ -50,8 +23,51 @@ $(function() {
   })
 })
 
+//--------jQuery UI drag-drop settings----------
 
+var gateDraggableSettings = {
+    containment: $("#square-container"),
+    revert: function(droppedObj) {
+      if (!droppedObj) {
+        droppable = $("#" + $(this).attr('value'));
+        droppable.addClass("disabled");
+        droppable.droppable("option", "disabled", true);
+        updateCoordinates($(this));
+        updateRelationships($(this));
+        displayGateDebugInfo();
+        return true;
+      }
+    },
+    revertDuration: 200,
+    start: function() {
+      //If gate starts being moved from where it was dropped, remove that square's disabled class and 'disabled' attribute
+      var droppable = $("#" + $(this).attr('value'));
+      droppable.removeClass("disabled");
+      droppable.droppable( "option", "disabled", false );
+      severConnections($(this));
+      displayGateDebugInfo();
+    }
+}
 
+var gridDroppableSettings = {
+  accept: '.ui-draggable',
+  drop: dropGatePiece
+}
+
+function dropGatePiece(event, ui) {
+  var draggable = $("#" + ui.draggable.attr('id'));
+  var droppableId = $(this).attr('id');
+  draggable.attr('value', droppableId);
+
+  if ($(this).attr('id') != "gate-container") {
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    $(this).droppable( "option", "disabled", true );
+    $(this).addClass("disabled");
+  }
+  updateCoordinates(ui.draggable);
+  updateRelationships(ui.draggable);
+  displayGateDebugInfo();
+}
 
 //--------------Helper Functions-------------------------
 
@@ -75,35 +91,43 @@ function InitializeBoard() {
   }
 }
 
-function dropGatePiece(event, ui) {
-  var draggable = $("#" + ui.draggable.attr('id'));
-  var droppableId = $(this).attr('id');
-  draggable.attr('value', droppableId);
 
-  if ($(this).attr('id') != "gate-container") {
-    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
-    $(this).droppable( "option", "disabled", true );
-    $(this).addClass("disabled");
-  }
-  updateCoordinates(ui.draggable);
-  updateRelationships(ui.draggable);
-  displayGateDebugInfo();
-}
 
 function addGate(gateObject) {
   gatesArray.push(gateObject);
 }
 
-function createGates() {
+function createGates(levelObject) {
   gatesArray = [];
-  addGate(new Gate("Wire", "wire1"));
-  addGate(new Gate("Wire", "wire2"));
-  addGate(new Gate("Wire", "wire3"));
-  addGate(new Gate("AND", "and1"));
-  addGate(new Gate("OR", "or1"));
-  addGate(new Gate("Input", "input1"));
-  addGate(new Gate("Input", "input2"));
-  addGate(new Gate("Output", "output1"));
+  var initializeLevelString = "";
+
+  for (var i = 0; i < levelObject.wires; i++) {
+    addGate(new Gate("Wire", "wire" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.ands; i++) {
+    addGate(new Gate("AND", "and" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.nots; i++) {
+    addGate(new Gate("NOT", "not" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.ors; i++) {
+    addGate(new Gate("OR", "or" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.xors; i++) {
+    addGate(new Gate("XOR", "xor" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.inputs; i++) {
+    addGate(new Gate("Input", "input" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.outputs; i++) {
+    addGate(new Gate("Output", "output" + (i+1)))
+  }
 }
 
 function loadGates() {
@@ -189,14 +213,15 @@ function updateCoordinates(htmlElem) {
 function displayGateDebugInfo() {
   var toDisplay = "";
   for (var i = 0; i < gatesArray.length; i++) {
+    var currentGate = gatesArray[i];
     toDisplay +=
       "<div class='panel-container'>" +
-        "Name: <strong>" + gatesArray[i].id + "</strong><br>" +
-        "Coords: " + gatesArray[i].coordinates + "<br>" +
-        "Input1 From: " + ((gatesArray[i].InputLocation1) ? "<strong style='color: red'>" + gatesArray[i].InputLocation1.id + "</strong>" : "null") + "<br>" +
-        "Input2 From: " + gatesArray[i].InputLocation2 + "<br>" +
-        "Output To: " + ((gatesArray[i].output) ? "<strong style='color: red'>" + gatesArray[i].output.id + "</strong>" : "null") + "<br>" +
-        "State: " + ((gatesArray[i].state) ? "On" : "Off") + "<br>" +
+        "Name: <strong>" + currentGate.id + "</strong><br>" +
+        "Coords: " + currentGate.coordinates + "<br>" +
+        "Input1 From: " + ((currentGate.InputLocation1) ? "<strong style='color: red'>" + currentGate.InputLocation1.id + "</strong>" : "null") + "<br>" +
+        "Input2 From: " + currentGate.InputLocation2 + "<br>" +
+        "Output To: " + ((currentGate.output) ? "<strong style='color: red'>" + currentGate.output.id + "</strong>" : "null") + "<br>" +
+        "State: " + ((currentGate.state) ? "On" : "Off") + "<br>" +
       "</div>";
   }
   $('#debug-panel').html(toDisplay);

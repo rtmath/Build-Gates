@@ -21,3 +21,16 @@ Gate.prototype.GetInput = function() {
     alert("Invalid gate type: cannot retrieve input");
   }
 }
+
+
+function Level() {
+  this.wires = 3;
+  this.ands = 1;
+  this.nots = 0;
+  this.ors = 1;
+  this.xors = 0;
+  this.inputs = 2;
+  this.outputs = 1;
+  this.inputLocations = ["3-3", "5-3"];
+  this.outputLocations = ["4-5"];
+}
