@@ -16,7 +16,7 @@ $(function() {
     $(".gate").draggable( gateDraggableSettings );
     $(".grid").droppable( gridDroppableSettings );
     $("#gate-container").droppable( gridDroppableSettings );
-
+    positionIO(level.inputLocations, level.outputLocations);
     console.log("Gates Array: ");
     console.log(gatesArray);
     displayGateDebugInfo();
@@ -91,8 +91,6 @@ function InitializeBoard() {
   }
 }
 
-
-
 function addGate(gateObject) {
   gatesArray.push(gateObject);
 }
@@ -134,9 +132,36 @@ function loadGates() {
   var gatesToLoad = "";
   gatesArray.forEach(function(elem) {
     gatesToLoad +=
-      "<div id='" + elem.id + "' class='gate'>" + elem.id + "</div>";
+      "<div id='" + elem.id + "' class='gate " + elem.type + "'>" + elem.id + "</div>";
   })
   $('#gate-container').html(gatesToLoad);
+}
+
+function positionIO(inputLocations, outputLocations) {
+  var inputCounter = 0;
+  var outputCounter = 0;
+  $('#gate-container').children().each(function(index) {
+      if ($(this).hasClass("Input")) {
+        var dropTarget = $('#' + inputLocations[inputCounter]);
+        dropTarget.droppable( "option", "disabled", true );
+        dropTarget.addClass("disabled");
+        $(this).position({ of: dropTarget, my: 'left top', at: 'left top' });
+        $(this).attr("value", inputLocations[inputCounter]);
+        gatesArray[findArrayId($(this).attr('id'))].coordinates = inputLocations[inputCounter];
+        $(this).draggable("disable");
+        inputCounter++;
+      }
+      if ($(this).hasClass("Output")) {
+        var dropTarget = $('#' + outputLocations[outputCounter]);
+        dropTarget.droppable( "option", "disabled", true );
+        dropTarget.addClass("disabled");
+        $(this).position({ of: dropTarget, my: 'left top', at: 'left top' });
+        $(this).attr("value", outputLocations[outputCounter]);
+        gatesArray[findArrayId($(this).attr('id'))].coordinates = outputLocations[outputCounter];      
+        $(this).draggable("disable");
+        outputCounter++;
+      }
+    });
 }
 
 function updateRelationships(htmlElem) {

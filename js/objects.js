@@ -32,5 +32,5 @@ function Level() {
   this.inputs = 2;
   this.outputs = 1;
   this.inputLocations = ["3-3", "5-3"];
-  this.outputLocations = ["4-5"];
+  this.outputLocations = ["4-6"];
 }
