@@ -314,7 +314,7 @@ function displayGateDebugInfo() {
         "Input1 From: " + ((currentGate.InputLocation1) ? "<strong style='color: red'>" + currentGate.InputLocation1.id + "</strong>" : "null") + "<br>" +
         "Input2 From: " + ((currentGate.InputLocation2) ? "<strong style='color: red'>" + currentGate.InputLocation2.id + "</strong>" : "null") + "<br>" +
         "Output To: " + ((currentGate.output) ? "<strong style='color: red'>" + currentGate.output.id + "</strong>" : "null") + "<br>" +
-        "State: " + ((currentGate.state) ? "On" : "Off") + "<br>" +
+        "State: " + currentGate.state + "<br>" +
         // "Left: " + currentGate.left + "<br>" +
         // "Right: " + currentGate.right + "<br>" +
         // "Up: " + currentGate.up + "<br>" +
