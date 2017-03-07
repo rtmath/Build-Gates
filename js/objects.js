@@ -115,7 +115,7 @@ Gate.prototype.GetInput = function() {
 
 
 function Level() {
-  this.wires = 1;
+  this.wires = 3;
   this.uWires = 1;
   this.dWires= 1;
   this.ands = 1;

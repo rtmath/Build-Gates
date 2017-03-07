@@ -290,6 +290,7 @@ function checkState() {
       $(this).removeClass("on");
     }
   })
+
 }
 
 function singleGateCheckState(htmlElem) {
