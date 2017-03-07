@@ -193,69 +193,37 @@ function updateRelationships(htmlElem) {
     var toLeft = hElemValue - 1;
     var toRight = hElemValue + 1;
     $('#gate-container').children().each(function() {
-      var childValue = getElemCoords($(this).attr('value'));
+      var childCoords = getElemCoords($(this).attr('value'));
       var htmlIndex = findArrayId(htmlElem.attr('id'));
       var childIndex = findArrayId($(this).attr('id'));
-      var htmlObject = gatesArray[htmlIndex];
-      var childObject = gatesArray[childIndex];
+      var placedGate = gatesArray[htmlIndex];
+      var adjacentGate = gatesArray[childIndex];
 
-      if (htmlObject.wireType) {
-        if (htmlObject.wireType === "straight") {
-          switch(childValue) {
-            case toLeft:
-              htmlObject.InputLocation1 = childObject;
-              childObject.output = htmlObject;
-              break;
-            case toRight:
-              childObject.InputLocation1 = htmlObject;
-              htmlObject.output = childObject;
-              break;
+      switch(childCoords) {
+        case toLeft:
+          if (adjacentGate.right && placedGate.left) {
+            adjacentGate.output = placedGate;
+            placedGate.InputLocation1 = adjacentGate;
           }
-        } else if (htmlObject.wireType === "up") {
-          switch(childValue) {
-            case toLeft:
-              htmlObject.InputLocation1 = childObject;
-              childObject.output = htmlObject;
-              break;
-            case above:
-              htmlObject.InputLocation1 = childObject;
-              childObject.output = htmlObject;
-              break;
+          break;
+        case toRight:
+          if (adjacentGate.left && placedGate.right) {
+            adjacentGate.InputLocation1 = placedGate;
+            placedGate.output = adjacentGate;
           }
-        } else if (htmlObject.wireType === "down") {
-          switch(childValue) {
-            case toLeft:
-              htmlObject.InputLocation1 = childObject;
-              childObject.output = htmlObject;
-              break;
-            case below:
-              htmlObject.InputLocation1 = childObject;
-              childObject.output = htmlObject;
-              break;
+          break;
+        case above:
+          if (placedGate.up && adjacentGate.down) {
+            placedGate.output = adjacentGate;
+            adjacentGate.InputLocation1 = placedGate;
           }
-        } else {
-          alert("Invalid wire type");
-        }
-      } else {
-        switch(childValue) {
-          case above:
-            htmlObject.InputLocation1 = childObject;
-            childObject.output = htmlObject;
-            break;
-
-          case below:
-            htmlObject.InputLocation1 = childObject;
-            childObject.output = htmlObject;
-            break;
-          case toLeft:
-            htmlObject.InputLocation1 = childObject;
-            childObject.output = htmlObject;
-            break;
-          case toRight:
-            childObject.InputLocation1 = htmlObject;
-            htmlObject.output = childObject;
-            break;
-        }
+          break;
+        case below:
+          if (placedGate.down && adjacentGate.up) {
+            placedGate.output = adjacentGate;
+            adjacentGate.InputLocation1 = placedGate;
+          }
+          break;
       }
     })
   }
@@ -296,12 +264,76 @@ function displayGateDebugInfo() {
     toDisplay +=
       "<div class='panel-container'>" +
         "Name: <strong>" + currentGate.id + "</strong><br>" +
-        "Coords: " + currentGate.coordinates + "<br>" +
+        "Coords: " + ((currentGate.coordinates === 'gate-container') ? "" : currentGate.coordinates) + "<br>" +
         "Input1 From: " + ((currentGate.InputLocation1) ? "<strong style='color: red'>" + currentGate.InputLocation1.id + "</strong>" : "null") + "<br>" +
         "Input2 From: " + currentGate.InputLocation2 + "<br>" +
         "Output To: " + ((currentGate.output) ? "<strong style='color: red'>" + currentGate.output.id + "</strong>" : "null") + "<br>" +
         "State: " + ((currentGate.state) ? "On" : "Off") + "<br>" +
+        // "Left: " + currentGate.left + "<br>" +
+        // "Right: " + currentGate.right + "<br>" +
+        // "Up: " + currentGate.up + "<br>" +
+        // "Down: " + currentGate.down + "<br>" +
       "</div>";
   }
   $('#debug-panel').html(toDisplay);
 }
+
+
+// if (htmlObject.wireType) {
+//   if (htmlObject.wireType === "straight") {
+//     switch(childValue) {
+//       case toLeft:
+//         htmlObject.InputLocation1 = childObject;
+//         childObject.output = htmlObject;
+//         break;
+//       case toRight:
+//         childObject.InputLocation1 = htmlObject;
+//         htmlObject.output = childObject;
+//         break;
+//     }
+//   } else if (htmlObject.wireType === "up") {
+//     switch(childValue) {
+//       case toLeft:
+//         htmlObject.InputLocation1 = childObject;
+//         childObject.output = htmlObject;
+//         break;
+//       case above:
+//         htmlObject.InputLocation1 = childObject;
+//         childObject.output = htmlObject;
+//         break;
+//     }
+//   } else if (htmlObject.wireType === "down") {
+//     switch(childValue) {
+//       case toLeft:
+//         htmlObject.InputLocation1 = childObject;
+//         childObject.output = htmlObject;
+//         break;
+//       case below:
+//         htmlObject.InputLocation1 = childObject;
+//         childObject.output = htmlObject;
+//         break;
+//     }
+//   } else {
+//     alert("Invalid wire type");
+//   }
+// } else {
+//   switch(childValue) {
+//     case above:
+//       htmlObject.InputLocation1 = childObject;
+//       childObject.output = htmlObject;
+//       break;
+//
+//     case below:
+//       htmlObject.InputLocation1 = childObject;
+//       childObject.output = htmlObject;
+//       break;
+//     case toLeft:
+//       htmlObject.InputLocation1 = childObject;
+//       childObject.output = htmlObject;
+//       break;
+//     case toRight:
+//       childObject.InputLocation1 = htmlObject;
+//       htmlObject.output = childObject;
+//       break;
+//   }
+// }

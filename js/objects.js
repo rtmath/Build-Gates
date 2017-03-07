@@ -1,19 +1,43 @@
 function Gate(type, id) {
   this.id = id;
   this.type = type;
-  this.wireType = null;
   this.coordinates = "";
   this.InputLocation1 = null;
   this.InputLocation2 = null;
   this.output = null;
   this.state = 0;
+  this.left = false;
+  this.right = false;
+  this.up = false;
+  this.down = false;
 
-  if (this.type === "Wire") {
-    this.wireType === "straight";
-  } else if (this.type === "uWire") {
-    this.wireType === "up";
-  } else if (this.type === "dWire") {
-    this.wireType === "down";
+  switch(this.type) {
+    case "Wire":
+    case "NOT":
+      this.left = true;
+      this.right = true;
+      break;
+    case "Input":
+      this.right = true;
+      break;
+    case "Output":
+      this.left = true;
+      break;
+    case "AND":
+    case "OR":
+    case "XOR":
+      this.right = true;
+      this.up = true;
+      this.down = true;
+      break;
+    case "uWire":
+      this.left = true;
+      this.up = true;
+      break;
+    case "dWire":
+      this.left = true;
+      this.down = true;
+      break;
   }
 }
 
