@@ -39,7 +39,7 @@ var gateDraggableSettings = {
         droppable.droppable("option", "disabled", true);
         updateCoordinates($(this));
         updateRelationships($(this));
-        singleGateCheckState($(this));
+        checkState();
         displayGateDebugInfo();
         return true;
       }
@@ -52,6 +52,7 @@ var gateDraggableSettings = {
       droppable.removeClass("disabled");
       droppable.droppable( "option", "disabled", false );
       severConnections($(this));
+      checkState();
       displayGateDebugInfo();
     }
 }
@@ -285,7 +286,7 @@ function displayGateDebugInfo() {
     var currentGate = gatesArray[i];
     toDisplay +=
       "<div class='panel-container'>" +
-        "Name: <strong>" + currentGate.id + "</strong><br>" +
+        "<strong>" + currentGate.id.toUpperCase() + "</strong><br>" +
         "Coords: " + ((currentGate.coordinates === 'gate-container') ? "" : currentGate.coordinates) + "<br>" +
         "Input1 From: " + ((currentGate.InputLocation1) ? "<strong style='color: red'>" + currentGate.InputLocation1.id + "</strong>" : "null") + "<br>" +
         "Input2 From: " + currentGate.InputLocation2 + "<br>" +

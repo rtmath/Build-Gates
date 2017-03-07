@@ -43,7 +43,7 @@ function Gate(type, id) {
 }
 
 Gate.prototype.GetInput = function() {
-  if (this.type === "Wire") {
+  if (this.type === "Wire" || this.type === "dWire" || this.type === "uWire") {
     if (this.InputLocation1 != null) {
       var input = this.InputLocation1.GetInput();
       this.state = ((input === 1) ? 1 : 0);
@@ -51,21 +51,56 @@ Gate.prototype.GetInput = function() {
       this.state = 0;
     }
     return this.state;
+
   } else if (this.type === "Input") {
     return this.state;
+
   } else if (this.type === "AND") {
+    if (this.InputLocation1 != null && this.InputLocation2 != null) {
+      var inputState1 = this.InputLocation1.GetInput();
+      var inputState2 = this.InputLocation2.GetInput();
+      this.state = (inputState1 && inputState2);
+    } else {
+      this.state = 0;
+    }
+    return this.state;
 
   } else if (this.type === "OR") {
+    if (this.InputLocation1 != null || this.InputLocation2 != null) {
+      var inputState1 = this.InputLocation1.GetInput();
+      var inputState2 = this.InputLocation2.GetInput();
+      this.state = (inputState1 || inputState2);
+    } else {
+      this.state = 0;
+    }
+    return this.state;
 
   } else if (this.type === "XOR") {
+    if (this.InputLocation1 != null || this.InputLocation2 != null) {
+      var inputState1 = this.InputLocation1.GetInput();
+      var inputState2 = this.InputLocation2.GetInput();
+      this.state = ((inputState1) ? !inputState2 : inputState2);
+    } else {
+      this.state = 0;
+    }
+    return this.state;
 
   } else if (this.type === "NOT") {
+    if (this.InputLocation1 != null) {
+      var inputState1 = this.InputLocation1.GetInput();
+      this.state = (!inputState1);
+    } else {
+      this.state = 0;
+    }
+    return this.state;
 
   } else if (this.type === "Output") {
-
-  } else if (this.type === "uWire") {
-
-  } else if (this.type === "dWire") {
+    if (this.InputLocation1 != null) {
+      this.state =  this.InputLocation1.GetInput()
+    } else {
+      this.state = 0;
+    }
+    return this.state;
 
   } else {
     alert("Invalid gate type: cannot retrieve input");
