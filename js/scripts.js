@@ -1,3 +1,9 @@
+// Todo
+// Apply directionality to gate update checks
+// Implement getState() to create working circuit
+
+
+
 //-----------Document Ready-----------
 
 $(function() {
@@ -103,6 +109,14 @@ function createGates(levelObject) {
     addGate(new Gate("Wire", "wire" + (i+1)))
   }
 
+  for (var i = 0; i < levelObject.uWires; i++) {
+    addGate(new Gate("uWire", "uWire" + (i+1)))
+  }
+
+  for (var i = 0; i < levelObject.dWires; i++) {
+    addGate(new Gate("dWire", "dWire" + (i+1)))
+  }
+
   for (var i = 0; i < levelObject.ands; i++) {
     addGate(new Gate("AND", "and" + (i+1)))
   }
@@ -132,9 +146,16 @@ function loadGates() {
   var gatesToLoad = "";
   gatesArray.forEach(function(elem) {
     gatesToLoad +=
-      "<div id='" + elem.id + "' class='gate " + elem.type + "'>" + elem.id + "</div>";
+      "<div id='" + elem.id + "' class='gate " + elem.type + "'>" + gateSymbols(elem.id) + "</div>";
   })
   $('#gate-container').html(gatesToLoad);
+}
+
+function gateSymbols(elemId) {
+  if (elemId === "uWire1") {return "┘"}
+  else if (elemId === "dWire1") {return "┐"}
+  else if (elemId === "wire1" || elemId === "wire2" || elemId === "wire3") {return "─"}
+  else {return elemId}
 }
 
 function positionIO(inputLocations, outputLocations) {
@@ -157,7 +178,7 @@ function positionIO(inputLocations, outputLocations) {
         dropTarget.addClass("disabled");
         $(this).position({ of: dropTarget, my: 'left top', at: 'left top' });
         $(this).attr("value", outputLocations[outputCounter]);
-        gatesArray[findArrayId($(this).attr('id'))].coordinates = outputLocations[outputCounter];      
+        gatesArray[findArrayId($(this).attr('id'))].coordinates = outputLocations[outputCounter];
         $(this).draggable("disable");
         outputCounter++;
       }
@@ -171,37 +192,70 @@ function updateRelationships(htmlElem) {
     var below = hElemValue + 10;
     var toLeft = hElemValue - 1;
     var toRight = hElemValue + 1;
-    $('#gate-container').children().each(function(index) {
+    $('#gate-container').children().each(function() {
       var childValue = getElemCoords($(this).attr('value'));
-      switch(childValue) {
+      var htmlIndex = findArrayId(htmlElem.attr('id'));
+      var childIndex = findArrayId($(this).attr('id'));
+      var htmlObject = gatesArray[htmlIndex];
+      var childObject = gatesArray[childIndex];
 
-        case above:
-          var oIndex = findArrayId(htmlElem.attr('id'));
-          var aIndex = findArrayId($(this).attr('id'));
-          gatesArray[oIndex].InputLocation1 = gatesArray[aIndex];
-          gatesArray[aIndex].output = gatesArray[oIndex];
-          break;
+      if (htmlObject.wireType) {
+        if (htmlObject.wireType === "straight") {
+          switch(childValue) {
+            case toLeft:
+              htmlObject.InputLocation1 = childObject;
+              childObject.output = htmlObject;
+              break;
+            case toRight:
+              childObject.InputLocation1 = htmlObject;
+              htmlObject.output = childObject;
+              break;
+          }
+        } else if (htmlObject.wireType === "up") {
+          switch(childValue) {
+            case toLeft:
+              htmlObject.InputLocation1 = childObject;
+              childObject.output = htmlObject;
+              break;
+            case above:
+              htmlObject.InputLocation1 = childObject;
+              childObject.output = htmlObject;
+              break;
+          }
+        } else if (htmlObject.wireType === "down") {
+          switch(childValue) {
+            case toLeft:
+              htmlObject.InputLocation1 = childObject;
+              childObject.output = htmlObject;
+              break;
+            case below:
+              htmlObject.InputLocation1 = childObject;
+              childObject.output = htmlObject;
+              break;
+          }
+        } else {
+          alert("Invalid wire type");
+        }
+      } else {
+        switch(childValue) {
+          case above:
+            htmlObject.InputLocation1 = childObject;
+            childObject.output = htmlObject;
+            break;
 
-        case below:
-          var oIndex = findArrayId(htmlElem.attr('id'));
-          var aIndex = findArrayId($(this).attr('id'));
-          gatesArray[oIndex].InputLocation1 = gatesArray[aIndex];
-          gatesArray[aIndex].output = gatesArray[oIndex];
-          break;
-
-        case toLeft:
-          var oIndex = findArrayId(htmlElem.attr('id'));
-          var aIndex = findArrayId($(this).attr('id'));
-          gatesArray[oIndex].InputLocation1 = gatesArray[aIndex];
-          gatesArray[aIndex].output = gatesArray[oIndex];
-          break;
-
-        case toRight:
-          var oIndex = findArrayId(htmlElem.attr('id'));
-          var aIndex = findArrayId($(this).attr('id'));
-          gatesArray[aIndex].InputLocation1 = gatesArray[oIndex];
-          gatesArray[oIndex].output = gatesArray[aIndex];
-          break;
+          case below:
+            htmlObject.InputLocation1 = childObject;
+            childObject.output = htmlObject;
+            break;
+          case toLeft:
+            htmlObject.InputLocation1 = childObject;
+            childObject.output = htmlObject;
+            break;
+          case toRight:
+            childObject.InputLocation1 = htmlObject;
+            htmlObject.output = childObject;
+            break;
+        }
       }
     })
   }
