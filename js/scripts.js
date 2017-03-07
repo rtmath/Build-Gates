@@ -1,8 +1,3 @@
-// Todo
-// Apply directionality to gate update checks
-// Implement getState() to create working circuit
-
-
 
 //-----------Document Ready-----------
 
@@ -249,7 +244,12 @@ function assignInputLocation(gate) {
 function severConnections(htmlElem) {
   var currentGate = gatesArray[findArrayId(htmlElem.attr('id'))];
   if (currentGate.output) {
-    currentGate.output.InputLocation1 = null;
+    if (currentGate.output.InputLocation1 === currentGate) {
+      currentGate.output.InputLocation1 = null;
+    }
+    if (currentGate.output.InputLocation2 === currentGate) {
+      currentGate.output.InputLocation2 = null;
+    }
     currentGate.output = null;
   }
   if (currentGate.InputLocation1) {
