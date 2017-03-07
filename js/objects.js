@@ -19,6 +19,7 @@ function Gate(type, id) {
       break;
     case "Input":
       this.right = true;
+      this.state = 1;
       break;
     case "Output":
       this.left = true;
@@ -42,13 +43,29 @@ function Gate(type, id) {
 }
 
 Gate.prototype.GetInput = function() {
-  if (this.type === "AND") {
+  if (this.type === "Wire") {
+    if (this.InputLocation1 != null) {
+      var input = this.InputLocation1.GetInput();
+      this.state = ((input === 1) ? 1 : 0);
+    } else {
+      this.state = 0;
+    }
+    return this.state;
+  } else if (this.type === "Input") {
+    return this.state;
+  } else if (this.type === "AND") {
 
   } else if (this.type === "OR") {
 
   } else if (this.type === "XOR") {
 
   } else if (this.type === "NOT") {
+
+  } else if (this.type === "Output") {
+
+  } else if (this.type === "uWire") {
+
+  } else if (this.type === "dWire") {
 
   } else {
     alert("Invalid gate type: cannot retrieve input");

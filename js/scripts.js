@@ -23,8 +23,7 @@ $(function() {
     $(".grid").droppable( gridDroppableSettings );
     $("#gate-container").droppable( gridDroppableSettings );
     positionIO(level.inputLocations, level.outputLocations);
-    console.log("Gates Array: ");
-    console.log(gatesArray);
+    checkState();
     displayGateDebugInfo();
   })
 })
@@ -40,6 +39,7 @@ var gateDraggableSettings = {
         droppable.droppable("option", "disabled", true);
         updateCoordinates($(this));
         updateRelationships($(this));
+        singleGateCheckState($(this));
         displayGateDebugInfo();
         return true;
       }
@@ -47,6 +47,7 @@ var gateDraggableSettings = {
     revertDuration: 200,
     start: function() {
       //If gate starts being moved from where it was dropped, remove that square's disabled class and 'disabled' attribute
+      $(this).removeClass("on");
       var droppable = $("#" + $(this).attr('value'));
       droppable.removeClass("disabled");
       droppable.droppable( "option", "disabled", false );
@@ -72,6 +73,7 @@ function dropGatePiece(event, ui) {
   }
   updateCoordinates(ui.draggable);
   updateRelationships(ui.draggable);
+  checkState();
   displayGateDebugInfo();
 }
 
@@ -254,6 +256,26 @@ function updateCoordinates(htmlElem) {
   gatesArray[aIndex].coordinates = htmlElem.attr('value');
 }
 
+function checkState() {
+  $('#gate-container').children().each(function() {
+    var gate = gatesArray[findArrayId($(this).attr('id'))];
+    gate.GetInput();
+    if (gate.state) {
+      $(this).addClass("on");
+    } else {
+      $(this).removeClass("on");
+    }
+  })
+}
+
+function singleGateCheckState(htmlElem) {
+  var gate = gatesArray[findArrayId(htmlElem.attr('id'))];
+  if (gate.state) {
+    htmlElem.addClass("on");
+  } else {
+    htmlElem.removeClass("on");
+  }
+}
 
 //------------Debug----------------
 
@@ -277,63 +299,3 @@ function displayGateDebugInfo() {
   }
   $('#debug-panel').html(toDisplay);
 }
-
-
-// if (htmlObject.wireType) {
-//   if (htmlObject.wireType === "straight") {
-//     switch(childValue) {
-//       case toLeft:
-//         htmlObject.InputLocation1 = childObject;
-//         childObject.output = htmlObject;
-//         break;
-//       case toRight:
-//         childObject.InputLocation1 = htmlObject;
-//         htmlObject.output = childObject;
-//         break;
-//     }
-//   } else if (htmlObject.wireType === "up") {
-//     switch(childValue) {
-//       case toLeft:
-//         htmlObject.InputLocation1 = childObject;
-//         childObject.output = htmlObject;
-//         break;
-//       case above:
-//         htmlObject.InputLocation1 = childObject;
-//         childObject.output = htmlObject;
-//         break;
-//     }
-//   } else if (htmlObject.wireType === "down") {
-//     switch(childValue) {
-//       case toLeft:
-//         htmlObject.InputLocation1 = childObject;
-//         childObject.output = htmlObject;
-//         break;
-//       case below:
-//         htmlObject.InputLocation1 = childObject;
-//         childObject.output = htmlObject;
-//         break;
-//     }
-//   } else {
-//     alert("Invalid wire type");
-//   }
-// } else {
-//   switch(childValue) {
-//     case above:
-//       htmlObject.InputLocation1 = childObject;
-//       childObject.output = htmlObject;
-//       break;
-//
-//     case below:
-//       htmlObject.InputLocation1 = childObject;
-//       childObject.output = htmlObject;
-//       break;
-//     case toLeft:
-//       htmlObject.InputLocation1 = childObject;
-//       childObject.output = htmlObject;
-//       break;
-//     case toRight:
-//       childObject.InputLocation1 = htmlObject;
-//       htmlObject.output = childObject;
-//       break;
-//   }
-// }
