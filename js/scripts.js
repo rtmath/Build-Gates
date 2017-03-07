@@ -206,30 +206,44 @@ function updateRelationships(htmlElem) {
         case toLeft:
           if (adjacentGate.right && placedGate.left) {
             adjacentGate.output = placedGate;
-            placedGate.InputLocation1 = adjacentGate;
+            placedGate[assignInputLocation(placedGate)] = adjacentGate;
           }
           break;
         case toRight:
           if (adjacentGate.left && placedGate.right) {
-            adjacentGate.InputLocation1 = placedGate;
+            adjacentGate[assignInputLocation(adjacentGate)] = placedGate;
             placedGate.output = adjacentGate;
           }
           break;
         case above:
           if (placedGate.up && adjacentGate.down) {
-            placedGate.output = adjacentGate;
-            adjacentGate.InputLocation1 = placedGate;
+             if (adjacentGate.type === "dWire") {
+              adjacentGate.output = placedGate;
+              placedGate[assignInputLocation(placedGate)] = adjacentGate;
+            } else {
+              placedGate.output = adjacentGate;
+              adjacentGate[assignInputLocation(adjacentGate)] = placedGate;
+            }
           }
           break;
         case below:
           if (placedGate.down && adjacentGate.up) {
-            placedGate.output = adjacentGate;
-            adjacentGate.InputLocation1 = placedGate;
+            if (adjacentGate.type === "uWire") {
+              adjacentGate.output = placedGate;
+              placedGate[assignInputLocation(placedGate)] = adjacentGate;
+            } else {
+              placedGate.output = adjacentGate;
+              adjacentGate[assignInputLocation(adjacentGate)] = placedGate;
+            }
           }
           break;
       }
     })
   }
+}
+
+function assignInputLocation(gate) {
+  return (gate.InputLocation1 != null) ? "InputLocation2" : "InputLocation1";
 }
 
 function severConnections(htmlElem) {
@@ -289,7 +303,7 @@ function displayGateDebugInfo() {
         "<strong>" + currentGate.id.toUpperCase() + "</strong><br>" +
         "Coords: " + ((currentGate.coordinates === 'gate-container') ? "" : currentGate.coordinates) + "<br>" +
         "Input1 From: " + ((currentGate.InputLocation1) ? "<strong style='color: red'>" + currentGate.InputLocation1.id + "</strong>" : "null") + "<br>" +
-        "Input2 From: " + currentGate.InputLocation2 + "<br>" +
+        "Input2 From: " + ((currentGate.InputLocation2) ? "<strong style='color: red'>" + currentGate.InputLocation2.id + "</strong>" : "null") + "<br>" +
         "Output To: " + ((currentGate.output) ? "<strong style='color: red'>" + currentGate.output.id + "</strong>" : "null") + "<br>" +
         "State: " + ((currentGate.state) ? "On" : "Off") + "<br>" +
         // "Left: " + currentGate.left + "<br>" +
