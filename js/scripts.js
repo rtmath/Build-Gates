@@ -20,7 +20,16 @@ $(function() {
     positionIO(level.inputLocations, level.outputLocations);
     checkState();
     displayGateDebugInfo();
+
+    $('.Input').click(function() {
+      var gate = gatesArray[findArrayId($(this).attr('id'))];
+      gate.state = (gate.state) ? 0 : 1;
+      checkState();
+      displayGateDebugInfo();
+    })
   })
+
+
 })
 
 //--------jQuery UI drag-drop settings----------
