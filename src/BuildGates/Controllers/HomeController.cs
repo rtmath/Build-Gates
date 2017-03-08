@@ -10,10 +10,32 @@ namespace BuildGates.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: /<controller>/
+        public const int NUMBER_OF_LEVELS = 5;
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        public IActionResult Play(int id)
+        {
+            if (id > 0 && id <= NUMBER_OF_LEVELS)
+            {
+                return View(ViewBag.LevelId = id);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
         }
     }
 }

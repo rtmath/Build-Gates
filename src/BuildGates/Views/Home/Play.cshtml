@@ -1,0 +1,23 @@
+﻿<script src="/js/jquery-3.1.1.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/objects.js"></script>
+<script src="/js/scripts.js"></script>
+
+<h2>Build Gates!</h2>
+<h2>Level: @ViewBag.LevelId</h2>
+
+<input hidden id="LevelId" value="@ViewBag.LevelId"/>
+
+<body>
+    <div id="square-container">
+        <div id="gate-container">
+        </div>
+    </div>
+    <hr>
+    <button id="createGates">Create Gates</button>
+    <button id="reset">Reset</button>
+    <button id="debug">Show/Hide Debug Panel</button>
+    <div id="debug-panel">
+
+    </div>
+</body>
