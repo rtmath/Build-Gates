@@ -113,16 +113,16 @@ Gate.prototype.GetInput = function() {
 }
 
 
-function Level() {
-  this.wires = 3;
-  this.uWires = 1;
-  this.dWires= 1;
-  this.ands = 1;
-  this.nots = 1;
-  this.ors = 1;
-  this.xors = 1;
-  this.inputs = 2;
-  this.outputs = 1;
-  this.inputLocations = ["3-3", "5-3"];
-  this.outputLocations = ["4-6"];
+function Level(wires, uWires, dWires, ands, nots, ors, xors, inputs, outputs, inputLocations, outputLocations) {
+  this.wires = wires;
+  this.uWires = uWires;
+  this.dWires= dWires;
+  this.ands = ands;
+  this.nots = nots;
+  this.ors = ors;
+  this.xors = xors;
+  this.inputs = inputs;
+  this.outputs = outputs;
+  this.inputLocations = inputLocations;
+  this.outputLocations = outputLocations;
 }

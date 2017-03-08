@@ -9,11 +9,11 @@ $(function () {
         gatesArray = [];
         debugMode = false;
 
-        window.addEventListener("beforeunload", function (e) {
-            var confirmationMessage = "You are about to leave the page! Are you sure?";
-            (e || window.event).returnValue = confirmationMessage;
-            return confirmationMessage;
-        })
+        //window.addEventListener("beforeunload", function (e) {
+        //    var confirmationMessage = "You are about to leave the page! Are you sure?";
+        //    (e || window.event).returnValue = confirmationMessage;
+        //    return confirmationMessage;
+        //})
 
         $('#reset').click(function () {
             window.location.reload();
@@ -28,8 +28,9 @@ $(function () {
             }
         })
 
-        $('#createGates').click(function () {
-            var level = new Level();
+        $('#start').click(function () {
+            $('#start').hide();
+            var level = levelSelector(levelId);
             createGates(level);
             loadGates();
             $(".gate").draggable(gateDraggableSettings);
@@ -109,17 +110,7 @@ $(function () {
             }
         }
 
-        //--------------Helper Functions-------------------------
-
-        //Regex for getElemCoords()
-        var onlyNumbers = /\d+/g;
-
-        function getElemCoords(idString) {
-            if (typeof idString != "undefined" && idString != "gate-container") {
-                arrayCoords = idString.match(onlyNumbers);
-                return parseInt(arrayCoords[0] + arrayCoords[1]);
-            }
-        }
+        //---------Board Initialization------------------
 
         function InitializeBoard() {
             for (var i = 0; i < 10; i++) {
@@ -208,6 +199,27 @@ $(function () {
                     outputCounter++;
                 }
             });
+        }
+
+        function levelSelector(levelId) {
+            switch (levelId) {
+                case "1":
+                    return new Level(4, 0, 0, 0, 0, 0, 0, 1, 1, ["4-2"], ["4-7"]);
+                case "2":
+                    return new Level(4, 0, 0, 0, 0, 0, 0, 1, 1, ["4-2"], ["4-7"])
+            }
+        }
+
+        //--------------Helper Functions-------------------------
+
+        //Regex for getElemCoords()
+        var onlyNumbers = /\d+/g;
+
+        function getElemCoords(idString) {
+            if (typeof idString != "undefined" && idString != "gate-container") {
+                arrayCoords = idString.match(onlyNumbers);
+                return parseInt(arrayCoords[0] + arrayCoords[1]);
+            }
         }
 
         function updateRelationships(htmlElem) {
@@ -318,7 +330,8 @@ $(function () {
                 }
             })
             if (output.state) {
-                console.log("Victory!");
+                $('#success').show();
+                $('#nextLevel').show();
             }
         }
 
