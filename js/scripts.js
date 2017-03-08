@@ -19,12 +19,14 @@ $(function() {
     $("#gate-container").droppable( gridDroppableSettings );
     positionIO(level.inputLocations, level.outputLocations);
     checkState();
+    checkVictory();
     displayGateDebugInfo();
 
     $('.Input').click(function() {
       var gate = gatesArray[findArrayId($(this).attr('id'))];
       gate.state = (gate.state) ? 0 : 1;
       checkState();
+      checkVictory();
       displayGateDebugInfo();
     })
   })
@@ -39,11 +41,11 @@ var gateDraggableSettings = {
     revert: function(droppedObj) {
       if (!droppedObj) {
         droppable = $("#" + $(this).attr('value'));
-        droppable.addClass("disabled");
         droppable.droppable("option", "disabled", true);
         updateCoordinates($(this));
         updateRelationships($(this));
         checkState();
+        checkVictory();
         displayGateDebugInfo();
         return true;
       }
@@ -53,10 +55,10 @@ var gateDraggableSettings = {
       //If gate starts being moved from where it was dropped, remove that square's disabled class and 'disabled' attribute
       $(this).removeClass("on");
       var droppable = $("#" + $(this).attr('value'));
-      droppable.removeClass("disabled");
       droppable.droppable( "option", "disabled", false );
       severConnections($(this));
       checkState();
+      checkVictory();
       displayGateDebugInfo();
     }
 }
@@ -74,11 +76,11 @@ function dropGatePiece(event, ui) {
   if ($(this).attr('id') != "gate-container") {
     ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
     $(this).droppable( "option", "disabled", true );
-    $(this).addClass("disabled");
   }
   updateCoordinates(ui.draggable);
   updateRelationships(ui.draggable);
   checkState();
+  checkVictory();
   displayGateDebugInfo();
 }
 
@@ -165,7 +167,6 @@ function positionIO(inputLocations, outputLocations) {
       if ($(this).hasClass("Input")) {
         var dropTarget = $('#' + inputLocations[inputCounter]);
         dropTarget.droppable( "option", "disabled", true );
-        dropTarget.addClass("disabled");
         $(this).position({ of: dropTarget, my: 'left top', at: 'left top' });
         $(this).attr("value", inputLocations[inputCounter]);
         gatesArray[findArrayId($(this).attr('id'))].coordinates = inputLocations[inputCounter];
@@ -175,7 +176,6 @@ function positionIO(inputLocations, outputLocations) {
       if ($(this).hasClass("Output")) {
         var dropTarget = $('#' + outputLocations[outputCounter]);
         dropTarget.droppable( "option", "disabled", true );
-        dropTarget.addClass("disabled");
         $(this).position({ of: dropTarget, my: 'left top', at: 'left top' });
         $(this).attr("value", outputLocations[outputCounter]);
         gatesArray[findArrayId($(this).attr('id'))].coordinates = outputLocations[outputCounter];
@@ -283,15 +283,17 @@ function checkState() {
       $(this).removeClass(gate.type+"On");
     }
   })
-
 }
 
-function singleGateCheckState(htmlElem) {
-  var gate = gatesArray[findArrayId(htmlElem.attr('id'))];
-  if (gate.state) {
-    htmlElem.addClass("on");
-  } else {
-    htmlElem.removeClass("on");
+function checkVictory() {
+  var output;
+  gatesArray.forEach(function(elem) {
+    if (elem.type === "Output") {
+      output = elem;
+    }
+  })
+  if (output.state) {
+    console.log("Victory!");
   }
 }
 

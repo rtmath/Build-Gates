@@ -97,7 +97,7 @@ Gate.prototype.GetInput = function() {
       if (this.InputLocation1 != null) {
         var inputState1 = this.InputLocation1.GetInput();
         if (inputState1 != null) {
-          this.state = (!inputState1);
+          this.state = ((inputState1) ? 0 : 1);
         }
       } else {
         this.state = null;
