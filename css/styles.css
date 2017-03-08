@@ -8,13 +8,13 @@
 
 .gate {
   line-height: 50px;
-  background-color: transparent;
+  background-color: grey;
   text-align: center;
   min-width: 50px;
   width: 50px;
   height: 50px;
   margin: 1%;
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
 .disabled {
@@ -60,6 +60,92 @@
   flex: 23%;
 }
 
-.on {
-  border: 1px dotted yellow;
+.Wire {
+  background-image: url("../img/gates.png");
+  background-position: 0px 0px;
+}
+
+.uWire {
+  background-image: url("../img/gates.png");
+  background-position: -50px 0px;
+}
+
+.dWire {
+  background-image: url("../img/gates.png");
+  background-position: -100px 0px;
+}
+
+.AND {
+  background-image: url("../img/gates.png");
+  background-position: -150px 0px;
+}
+
+.OR {
+  background-image: url("../img/gates.png");
+  background-position: -200px 0px;
+}
+
+.XOR {
+  background-image: url("../img/gates.png");
+  background-position: -250px 0px;
+}
+
+.NOT {
+  background-image: url("../img/gates.png");
+  background-position: -300px 0px;
+}
+
+.Input {
+  background-image: url("../img/gates.png");
+  background-position: -350px 0px;
+}
+
+.Output {
+  background-image: url("../img/gates.png");
+  background-position: -400px 0px;
+}
+
+.WireOn {
+  background-image: url("../img/gates.png");
+  background-position: 0px 50px;
+}
+
+.uWireOn {
+  background-image: url("../img/gates.png");
+  background-position: -50px 50px;
+}
+
+.dWireOn {
+  background-image: url("../img/gates.png");
+  background-position: -100px 50px;
+}
+
+.ANDOn {
+  background-image: url("../img/gates.png");
+  background-position: -150px 50px;
+}
+
+.OROn {
+  background-image: url("../img/gates.png");
+  background-position: -200px 50px;
+}
+
+.XOROn {
+  background-image: url("../img/gates.png");
+  background-position: -250px 50px;
+}
+
+.NOTOn {
+  background-image: url("../img/gates.png");
+  background-position: -300px 50px;
+}
+
+.InputOn {
+  background-image: url("../img/gates.png");
+  background-position: -350px 50px;
+}
+
+.OutputOn {
+  background-image: url("../img/gates.png");
+  background-position: -400px 50px;
 }

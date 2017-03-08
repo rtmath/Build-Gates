@@ -153,16 +153,9 @@ function loadGates() {
   var gatesToLoad = "";
   gatesArray.forEach(function(elem) {
     gatesToLoad +=
-      "<div id='" + elem.id + "' class='gate " + elem.type + "'>" + gateSymbols(elem.id) + "</div>";
+      "<div id='" + elem.id + "' class='gate " + elem.type + "'></div>";
   })
   $('#gate-container').html(gatesToLoad);
-}
-
-function gateSymbols(elemId) {
-  if (elemId === "uWire1") {return "┘"}
-  else if (elemId === "dWire1") {return "┐"}
-  else if (elemId === "wire1" || elemId === "wire2" || elemId === "wire3") {return "─"}
-  else {return elemId}
 }
 
 function positionIO(inputLocations, outputLocations) {
@@ -285,9 +278,9 @@ function checkState() {
     var gate = gatesArray[findArrayId($(this).attr('id'))];
     gate.GetInput();
     if (gate.state) {
-      $(this).addClass("on");
+      $(this).addClass(gate.type+"On");
     } else {
-      $(this).removeClass("on");
+      $(this).removeClass(gate.type+"On");
     }
   })
 
