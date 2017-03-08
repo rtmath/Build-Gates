@@ -48,7 +48,7 @@
 
 /*DEBUG PANEL*/
 #debug-panel {
-  margin-top: 15%;
+  margin-top: 5%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -59,92 +59,80 @@
   flex: 23%;
 }
 
+.Wire, .WireOn, .uWire, .uWireOn, .dWire, .dWireOn,
+  .AND, .ANDOn, .OR, .OROn, .XOR, .XOROn,
+  .NOT, .NOTOn, .Input, .InputOn, .Output, .OutputOn {
+    background-image: url("../img/gates.png");
+}
+
 .Wire {
-  background-image: url("../img/gates.png");
   background-position: 0px 0px;
 }
 
 .uWire {
-  background-image: url("../img/gates.png");
   background-position: -50px 0px;
 }
 
 .dWire {
-  background-image: url("../img/gates.png");
   background-position: -100px 0px;
 }
 
 .AND {
-  background-image: url("../img/gates.png");
   background-position: -150px 0px;
 }
 
 .OR {
-  background-image: url("../img/gates.png");
   background-position: -200px 0px;
 }
 
 .XOR {
-  background-image: url("../img/gates.png");
   background-position: -250px 0px;
 }
 
 .NOT {
-  background-image: url("../img/gates.png");
   background-position: -300px 0px;
 }
 
 .Input {
-  background-image: url("../img/gates.png");
   background-position: -350px 0px;
 }
 
 .Output {
-  background-image: url("../img/gates.png");
   background-position: -400px 0px;
 }
 
 .WireOn {
-  background-image: url("../img/gates.png");
   background-position: 0px 50px;
 }
 
 .uWireOn {
-  background-image: url("../img/gates.png");
   background-position: -50px 50px;
 }
 
 .dWireOn {
-  background-image: url("../img/gates.png");
   background-position: -100px 50px;
 }
 
 .ANDOn {
-  background-image: url("../img/gates.png");
   background-position: -150px 50px;
 }
 
 .OROn {
-  background-image: url("../img/gates.png");
   background-position: -200px 50px;
 }
 
 .XOROn {
-  background-image: url("../img/gates.png");
   background-position: -250px 50px;
 }
 
 .NOTOn {
-  background-image: url("../img/gates.png");
   background-position: -300px 50px;
 }
 
 .InputOn {
-  background-image: url("../img/gates.png");
   background-position: -350px 50px;
 }
 
 .OutputOn {
-  background-image: url("../img/gates.png");
   background-position: -400px 50px;
 }
