@@ -2,7 +2,7 @@
 //-----------Document Ready-----------
 
 $(function () {
-    const NUMBER_OF_LEVELS = 5;
+    const NUMBER_OF_LEVELS =10;
     var levelId = $('#LevelId').val();
     if (levelId > 0 && levelId <= NUMBER_OF_LEVELS) {
         InitializeBoard();
@@ -202,11 +202,21 @@ $(function () {
         }
 
         function levelSelector(levelId) {
+            //Level constructor:
+            //(wires, upWires, downWires, ANDs, NOTs, ORs, XORs, Inputs, Outputs, InputLocationCoordinates[], OutputLocationCoordinates[]
             switch (levelId) {
                 case "1":
                     return new Level(4, 0, 0, 0, 0, 0, 0, 1, 1, ["4-2"], ["4-7"]);
                 case "2":
-                    return new Level(4, 0, 0, 0, 0, 0, 0, 1, 1, ["4-2"], ["4-7"])
+                    return new Level(2, 1, 1, 0, 0, 1, 0, 2, 1, ["3-2", "5-2"], ["4-6"]);
+                case "3":
+                    return new Level(3, 1, 1, 1, 0, 0, 0, 2, 1, ["3-2", "5-2"], ["4-6"]);
+                case "4":
+                    return new Level(0, 1, 1, 0, 0, 0, 1, 2, 1, ["1-1", "3-1"], ["2-3"]);
+                case "5":
+                    return new Level(1, 1, 1, 1, 1, 0, 0, 2, 1, ["1-1", "3-1"], ["2-4"]);
+                case "6":
+                    return new Level(0, 1, 1, 1, 2, 0, 0, 2, 1, ["1-1", "3-1"], ["2-5"]);
             }
         }
 
