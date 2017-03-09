@@ -33,6 +33,13 @@
   position: relative;
 }
 
+.render-body-container {
+    min-width: 550px;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #start {
     position: absolute;
     left: 50%;
@@ -57,19 +64,92 @@
     display: none;
 }
 
-
-/*DEBUG PANEL*/
-#debug-panel {
-  margin-top: 5%;
-  display: flex;
-  flex-wrap: wrap;
-  width: 40%;
+#success-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.panel-container {
-  margin-right: 1%;
-  margin-bottom: 2%;
-  flex: 25%;
+.success-modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    text-align: center;
+    height: 180px;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+.success-modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    margin-top: 60px;
+    z-index: 3;
+    transition: background-color .4s;
+}
+
+.success-modal-content:hover {
+    background-color: darkgreen;
+}
+
+.success-modal-content:hover > a {
+    color: white;
+}
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0px; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0px; opacity:1}
+}
+
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav {
+    line-height: 40px;
+    height: 40px;
+    width: 100%;
+    background-color: salmon;
+    display: flex;
+    text-align: center;
+}
+
+.nav > a {
+    flex: 50%;
 }
 
 .Wire, .WireOn, .uWire, .uWireOn, .dWire, .dWireOn,
@@ -148,4 +228,19 @@
 
 .OutputOn {
   background-position: -400px 50px;
+}
+
+/*DEBUG PANEL*/
+#debug-panel {
+  margin-top: 5%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.panel-container {
+  margin-right: 1%;
+  margin-bottom: 2%;
+  flex: 30%;
+  text-align: center;
 }

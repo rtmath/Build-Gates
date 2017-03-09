@@ -8,8 +8,8 @@
 -debug:full
 -nostdlib
 -nologo
-"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\obj\Debug\net452\dotnet-compile.assemblyinfo.cs"
--out:"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\bin\Debug\net452\BuildGates.exe"
+"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\obj\Debug\net452\dotnet-compile.assemblyinfo.cs"
+-out:"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\bin\Debug\net452\BuildGates.exe"
 -r:"C:\Users\epicodus\.nuget\packages\Microsoft.AspNetCore.Antiforgery\1.0.1\lib\net451\Microsoft.AspNetCore.Antiforgery.dll"
 -r:"C:\Users\epicodus\.nuget\packages\Microsoft.AspNetCore.Authorization\1.0.0\lib\net451\Microsoft.AspNetCore.Authorization.dll"
 -r:"C:\Users\epicodus\.nuget\packages\Microsoft.AspNetCore.Cors\1.0.0\lib\net451\Microsoft.AspNetCore.Cors.dll"
@@ -117,7 +117,7 @@
 -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll"
 -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Tracing.dll"
 -r:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Primitives.dll"
--resource:"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\obj\Debug\net452\BuildGatesdotnet-compile.deps.json",BuildGates.deps.json
-"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Program.cs"
-"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Startup.cs"
-"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Controllers\HomeController.cs"
+-resource:"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\obj\Debug\net452\BuildGatesdotnet-compile.deps.json",BuildGates.deps.json
+"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Program.cs"
+"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Startup.cs"
+"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Controllers\HomeController.cs"

@@ -10,7 +10,7 @@ namespace BuildGates.Controllers
 {
     public class HomeController : Controller
     {
-        public const int NUMBER_OF_LEVELS = 10;
+        public const int NUMBER_OF_LEVELS = 5;
         public IActionResult Index()
         {
             return View();

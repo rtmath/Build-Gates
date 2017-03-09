@@ -2,18 +2,12 @@
 //-----------Document Ready-----------
 
 $(function () {
-    const NUMBER_OF_LEVELS =10;
+    const NUMBER_OF_LEVELS = 5;
     var levelId = $('#LevelId').val();
     if (levelId > 0 && levelId <= NUMBER_OF_LEVELS) {
         InitializeBoard();
         gatesArray = [];
         debugMode = false;
-
-        //window.addEventListener("beforeunload", function (e) {
-        //    var confirmationMessage = "You are about to leave the page! Are you sure?";
-        //    (e || window.event).returnValue = confirmationMessage;
-        //    return confirmationMessage;
-        //})
 
         $('#reset').click(function () {
             window.location.reload();
@@ -32,6 +26,7 @@ $(function () {
             $('#start').hide();
             var level = levelSelector(levelId);
             createGates(level);
+            randomizeGates();
             loadGates();
             $(".gate").draggable(gateDraggableSettings);
             $(".grid").droppable(gridDroppableSettings);
@@ -214,9 +209,17 @@ $(function () {
                 case "4":
                     return new Level(0, 1, 1, 0, 0, 0, 1, 2, 1, ["1-1", "3-1"], ["2-3"]);
                 case "5":
-                    return new Level(1, 1, 1, 1, 1, 0, 0, 2, 1, ["1-1", "3-1"], ["2-4"]);
-                case "6":
                     return new Level(0, 1, 1, 1, 2, 0, 0, 2, 1, ["1-1", "3-1"], ["2-5"]);
+            }
+        }
+
+        function randomizeGates() {
+            var m = gatesArray.length, t, i;
+            while (m) {
+                i = Math.floor(Math.random() * m--);
+                t = gatesArray[m];
+                gatesArray[m] = gatesArray[i];
+                gatesArray[i] = t;
             }
         }
 
@@ -342,6 +345,7 @@ $(function () {
             if (output.state) {
                 $('#success').show();
                 $('#nextLevel').show();
+                $('#success-modal').css("display", "block");
             }
         }
 

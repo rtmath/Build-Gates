@@ -6,16 +6,21 @@
 <h2>Build Gates!</h2>
 <h2>Level: @ViewBag.LevelId</h2>
 
+<p><strong>Drag and drop the gates onto the grid to deliver electrical current to the light and turn it green! <br />Click on the inputs to toggle the On/Off switch.</strong></p>
+
 <input hidden id="LevelId" value="@ViewBag.LevelId"/>
 
 <body>
+    <div id="success-modal">
+        <div class="success-modal-header"><span class="close">&times;</span><h2>Success! You did it!</h2></div>
+        <div class="success-modal-content"> <a id="nextLevel" href="/Home/Play/@(ViewBag.LevelId + 1)"><h3>Next Level</h3></a></div>
+        
+    </div>
     <div id="square-container">
         <div id="gate-container">
         </div>
         <button id="start">Start Level!</button>
     </div>
-    <div id="success">Success! You did it!</div>
-    <a id="nextLevel" href="/Home/Play/@(ViewBag.LevelId + 1)">Next Level</a>
     <hr>
     
     <button id="reset">Reset</button>

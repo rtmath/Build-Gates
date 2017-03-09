@@ -1,5 +1,5 @@
---temp-output:c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\obj\Debug\net452\
---out:c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\bin\Debug\net452\BuildGates.exe
+--temp-output:C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\obj\Debug\net452\
+--out:C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\bin\Debug\net452\BuildGates.exe
 --define:DEBUG
 --define:TRACE
 --define:NET452
@@ -121,7 +121,7 @@
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\System.ComponentModel.DataAnnotations.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Diagnostics.Tracing.dll
 --reference:C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Facades\System.Reflection.Primitives.dll
---resource:"c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\obj\Debug\net452\BuildGatesdotnet-compile.deps.json",BuildGates.deps.json
-c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Program.cs
-c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Startup.cs
-c:\users\epicodus\documents\visual studio 2015\Projects\BuildGates\src\BuildGates\Controllers\HomeController.cs
+--resource:"C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\obj\Debug\net452\BuildGatesdotnet-compile.deps.json",BuildGates.deps.json
+C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Program.cs
+C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Startup.cs
+C:\Users\epicodus\Desktop\Build-Gates\src\BuildGates\Controllers\HomeController.cs

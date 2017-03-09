@@ -19,7 +19,7 @@ function Gate(type, id) {
       break;
     case "Input":
       this.right = true;
-      this.state = 1;
+      this.state = 0;
       break;
     case "Output":
       this.left = true;
